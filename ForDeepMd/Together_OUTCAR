@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# 检查命令行参数
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 <prefix> <count>"
+    exit 1
+fi
+
+# 获取命令行参数
+prefix=$1
+count=$2
+
+# 检查是否有足够的子目录
+if [ ! -d "${prefix}1" ]; then
+    echo "Error: Directory ${prefix}1 not found. Make sure the directories exist."
+    exit 1
+fi
+
+# 拼接OUTCAR文件
+cat $(seq 1 $count | xargs -I {} echo "$prefix{}"/OUTCAR) > OUTCAR
+
+echo "OUTCAR files have been concatenated into OUTCAR"
